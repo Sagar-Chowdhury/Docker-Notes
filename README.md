@@ -129,5 +129,63 @@ docker run -e MYVAR1="value" --env MYVAR2=foo ubuntu bash
 * `docker run` is typically used to start your main application's processes inside a container.
 * `docker exec`  is incredibly useful for debugging, running auxiliary commands, or interacting with a running application within its container.
 
+**Docker Compose: Your Multi-Container Maestro**
+
+**Why Docker Compose?**
+
+While Docker is fantastic for running single containers, real-world applications often involve multiple interconnected services:
+
+* Web server (e.g., Nginx)
+* Database (e.g., MySQL, PostgreSQL)
+* Cache (e.g., Redis)
+* Message queue  (e.g., RabbitMQ)
+
+Managing these individually with Docker commands can get very complex! Docker Compose steps in to orchestrate multi-container setups with grace.
+
+**Key Benefits**
+
+1. **Single Configuration:** Define all your services, their dependencies, networks, and volumes within a single YAML file (`docker-compose.yml`). This keeps your project organized.
+2. **Environment Replication:**  Easily spin up identical copies of your entire application stack across different machines, simplifying development, testing, and deployment.
+3. **Collaboration:**  Share a `docker-compose.yml` file, and others can quickly bring up your entire application, dependencies and all.
+
+**Basic Docker Compose Commands**
+
+| Command              | Description                                                  |
+| ---------------------| ------------------------------------------------------------ |
+| `docker-compose up`  | Creates and starts all the containers defined in your `docker-compose.yml` file.   |
+| `docker-compose up -d` | Same as above, but runs containers in detached mode (background). |
+| `docker-compose down` | Stops and removes containers, networks, and volumes created by Compose. |
+| `docker-compose ps`  | Lists the containers managed by Compose.                     |
+| `docker-compose logs` | View the aggregated output logs of your services.             |
+| `docker-compose build` | Builds or rebuilds images defined in your Compose file.      |
+
+**Illustrative `docker-compose.yml`**
+
+```yaml
+version: '3'  # Compose file version
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+  database:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: mysecretpassword
+    volumes:
+      - db_data:/var/lib/mysql 
+volumes:
+  db_data: 
+```
+
+**Let's Break it Down**
+
+* It defines two services: `web` (Nginx) and `database` (MySQL).
+* `ports` maps host port 8080 to container port 80 for the web service.
+* `environment` sets up an environment variable for the MySQL container.
+* `volumes` creates a named volume `db_data` for persistent database storage.
+
+
+
 
 

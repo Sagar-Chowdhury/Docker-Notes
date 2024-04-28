@@ -1,4 +1,5 @@
 
+![docker-logo-blue](https://github.com/Sagar-Chowdhury/Docker-Theory/assets/76145064/4ca3fffa-4239-4b8d-85a2-500f3dc6c626)
 
 **Docker 🐳 – Solving Development Environment Headaches**
 
@@ -69,6 +70,8 @@ docker run -e MYVAR1="value" --env MYVAR2=foo ubuntu bash
 ```
 
 **Dockerizing a Node.js Application**
+
+[Using Docker init these are created automatically](https://docs.docker.com/language/nodejs/containerize/)
 
 1. **Dockerfile:** Instructions for building your image.
 

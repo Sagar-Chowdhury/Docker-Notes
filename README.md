@@ -193,16 +193,49 @@ volumes:
 | Network Type | Description                                                   | Use Cases                                             | Syntax Example                                       |
 |--------------|---------------------------------------------------------------|-------------------------------------------------------|------------------------------------------------------|
 | Bridge       | Default network; connects containers on the same host.         | Single-host applications, isolated microservices      | Implicit for most `docker run` commands              |
-| Host         | Container shares host's network namespace (no isolation).     | Special cases needing direct host network access      | `docker run --network host ...`                      |
+| Host         | Container shares host's network namespace (no isolation).     | Special cases needing direct host network access(**no port mapping** needed)      | `docker run --network host ...`                      |
 | Overlay      | Spans multiple hosts; requires external key-value store.    | Distributed applications across multiple machines     | `docker network create -d overlay my-network ...`    |
 | Macvlan      | Assigns MAC addresses to containers; bypasses host network. | Low-latency, needs network infrastructure support    | `docker network create -d macvlan ...`               |
-| None         | No networking; complete isolation within the container.       | Highly specialized, maximum security scenarios        | `docker run --network none ...`                      |
+| None         | **No networking**; complete isolation within the container.       | Highly specialized, maximum security scenarios        | `docker run --network none ...`                      |
 
 **Additional Notes:**
 
 * **Port Mapping:** Use `-p <host_port>:<container_port>`  with `docker run` to expose ports.
 * **Service Discovery:** Containers within the same network can typically find each other by service name.
 
+**Comparison Table:**
+
+| Feature          | Normal Bridge Network | User-defined Bridge Network |
+|------------------|------------------------|------------------------------|
+| Creation         | Implicit                | Explicit (using `docker network create`) |
+| Configuration     | Limited                 | Advanced (IP range, DNS, etc.) |
+| Sharing          | All containers share   | Isolated by default           |
+| Customization    | Limited                 | Highly customizable            |
+| Use Cases         | Basic deployments       | Complex deployments, specific network requirements |
+
+**Example:**
+
+* **Normal Bridge Network:**
+
+```bash
+docker run -d --name webserver nginx
+```
+
+This creates a container named "webserver" on the default bridge network.
+
+* **User-defined Bridge Network:**
+
+```bash
+docker network create my-app-network
+docker run -d --name webserver --network my-app-network nginx
+```
+
+Here, we create a custom network named "my-app-network" and then run the "webserver" container attached to that network.
+
+**In essence:**
+
+* Use the normal bridge network for simple setups where basic container communication is sufficient.
+* Leverage user-defined bridge networks for more complex deployments requiring specific configurations, isolation, or customization.
 
 
 

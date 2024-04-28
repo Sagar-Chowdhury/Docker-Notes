@@ -185,6 +185,24 @@ volumes:
 * `environment` sets up an environment variable for the MySQL container.
 * `volumes` creates a named volume `db_data` for persistent database storage.
 
+**Docker Networking**
+
+[Documentation](https://docs.docker.com/network/)
+
+| Network Type | Description                                                   | Use Cases                                             | Syntax Example                                       |
+|--------------|---------------------------------------------------------------|-------------------------------------------------------|------------------------------------------------------|
+| Bridge       | Default network; connects containers on the same host.         | Single-host applications, isolated microservices      | Implicit for most `docker run` commands              |
+| Host         | Container shares host's network namespace (no isolation).     | Special cases needing direct host network access      | `docker run --network host ...`                      |
+| Overlay      | Spans multiple hosts; requires external key-value store.    | Distributed applications across multiple machines     | `docker network create -d overlay my-network ...`    |
+| Macvlan      | Assigns MAC addresses to containers; bypasses host network. | Low-latency, needs network infrastructure support    | `docker network create -d macvlan ...`               |
+| None         | No networking; complete isolation within the container.       | Highly specialized, maximum security scenarios        | `docker run --network none ...`                      |
+
+**Additional Notes:**
+
+* **Port Mapping:** Use `-p <host_port>:<container_port>`  with `docker run` to expose ports.
+* **Service Discovery:** Containers within the same network can typically find each other by service name.
+
+
 
 
 

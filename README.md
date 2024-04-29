@@ -85,6 +85,102 @@ docker run -e MYVAR1="value" --env MYVAR2=foo ubuntu bash
    CMD ["node", "app.js"]  
    ```
 
+   **Sample Dockerfile**
+
+```dockerfile
+# syntax=docker/dockerfile:1
+
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Dockerfile reference guide at
+# https://docs.docker.com/go/dockerfile-reference/
+
+# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
+
+ARG NODE_VERSION=18.16.0
+
+FROM node:${NODE_VERSION}-alpine
+
+# Use production node environment by default.
+ENV NODE_ENV production
+
+
+WORKDIR /usr/src/app
+
+# Download dependencies as a separate step to take advantage of Docker's caching.
+# Leverage a cache mount to /root/.npm to speed up subsequent builds.
+# Leverage a bind mounts to package.json and package-lock.json to avoid having to copy them into
+# into this layer.
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --omit=dev
+
+# Run the application as a non-root user.
+USER node
+
+# Copy the rest of the source files into the image.
+COPY . .
+
+# Expose the port that the application listens on.
+EXPOSE 8000
+
+# Run the application.
+CMD npm start
+
+```
+Here's a step-by-step explanation of the Dockerfile, along with the rationale behind its optimizations:
+
+**1. Header**
+
+   * `# syntax=docker/dockerfile:1`: Declares the Dockerfile syntax version, enabling advanced features.
+   * `ARG NODE_VERSION=18.16.0`: Defines a build-time argument allowing you to easily set the Node.js version used by the image.
+
+**2. Base Image**
+
+   * `FROM node:${NODE_VERSION}-alpine`: Starts with a lightweight Alpine Linux image containing the Node.js version specified. This keeps the image size small.
+
+**3. Environment Variable**
+
+   * `ENV NODE_ENV production`: Sets the environment variable 'NODE_ENV' to 'production', which often signals to Node.js applications to turn on optimizations.
+
+**4. Working Directory**
+
+   * `WORKDIR /usr/src/app`: Sets the working directory inside the container. Subsequent commands will execute in this context.
+
+**5. Efficient Dependency Installation**
+
+   * `RUN --mount=type=bind,source=package.json,target=package.json \ 
+        --mount=type=bind,source=package-lock.json,target=package-lock.json \ 
+        --mount=type=cache,target=/root/.npm \
+        npm ci --omit=dev`
+
+     * **Bind mounts:** Mount `package.json` and `package-lock.json` directly from your host, preventing unnecessary copying and allowing immediate reaction to file updates.
+     * **Cache mount:** Uses a cache for `/root/.npm` to store downloaded dependencies, speeding up future builds.
+     * **`npm ci`:** Designed for production; installs dependencies strictly based on `package-lock.json` for reliability.
+     * **`--omit=dev`:** Skips development dependencies, making the final image smaller.
+
+**6. Run as a Non-Root User**
+
+   * `USER node`: Creates a user called 'node' and switches to it. This reduces privilege within the container, improving security.
+
+**7. Copy Project Files**
+
+   * `COPY . .`: Copies the rest of your source code into the container's working directory.
+
+**8. Expose Port**
+
+   * `EXPOSE 8000`:  Declares that the container will listen on port 8000. This informs Docker, but doesn't automatically map it to your host machine.
+
+**9. Run Application**
+
+   * `CMD npm start`: Specifies the command to execute when the container starts, assuming your Node.js application utilizes an npm 'start' script.
+
+**Reasons for Approach**
+
+* **Efficiency:** Leverages caching and bind mounts to optimize builds;  smaller images due to the alpine base and production-oriented installs.
+* **Security:** Enhances security by running the container process as a non-root user.
+* **Development Workflow:**  Makes builds faster, ideal for iterative development.
+
 2. **.dockerignore:** Excludes unnecessary files from your build.
 
 3. **Build and Run:**
@@ -283,6 +379,12 @@ docker run -it -v D:\SampleDockerFolder:/home/sharedFolder busybox
 
 * For a detailed, comprehensive list of options, refer to the official Docker documentation: [https://docs.docker.com/storage/volumes/](https://docs.docker.com/storage/volumes/)
 * **Remember:** Volumes should be used for data that needs to persist beyond the life of individual containers.
+
+
+
+
+
+
 
 
 

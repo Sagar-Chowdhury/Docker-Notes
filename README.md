@@ -380,6 +380,26 @@ docker run -it -v D:\SampleDockerFolder:/home/sharedFolder busybox
 * For a detailed, comprehensive list of options, refer to the official Docker documentation: [https://docs.docker.com/storage/volumes/](https://docs.docker.com/storage/volumes/)
 * **Remember:** Volumes should be used for data that needs to persist beyond the life of individual containers.
 
+**Docker Mounts**
+
+**What are Mounts?**
+
+* A mount is the process of making a file system or storage device accessible to a computer's operating system and users.
+* This creates a connection between a storage device (hard drive, network share, Docker volume, etc.)  and a specific point in the computer's file system hierarchy. 
+
+**Why Are Mounts Needed?**
+
+1. **Docker (and Container Technology):**
+   * **Persistence:** Docker containers are ephemeral, so mounts ensure data created by a container can persist beyond its lifespan.
+   * **Sharing Data:** Mounts allow containers to share files, either  with the host machine or with other containers.
+   * **Configuration:** You can mount configuration files directly into containers.
+
+**Key Points about Mounts**
+
+* Mounts create a link between a storage resource and a location within the file system. The data itself isn't usually copied to the mount point.
+* Mounts can have different permissions (read-only, read-write) to control access.
+
+
 
 
 

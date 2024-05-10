@@ -248,6 +248,8 @@ Managing these individually with Docker commands can get very complex! Docker Co
 2. **Environment Replication:**  Easily spin up identical copies of your entire application stack across different machines, simplifying development, testing, and deployment.
 3. **Collaboration:**  Share a `docker-compose.yml` file, and others can quickly bring up your entire application, dependencies and all.
 
+**Note:-** In summary, Docker commands are for managing *individual containers* and images, while Docker Compose commands are for *managing multi-container* applications defined in a single configuration file. 
+
 **Basic Docker Compose Commands**
 
 | Command              | Description                                                  |

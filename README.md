@@ -22,6 +22,10 @@ Docker is here to save the day! It's a platform designed to make it super easy t
 
 * Head to the official Docker website and download Docker Desktop for your operating system (includes everything you need - Engine, CLI, etc.): [https://www.docker.com/get-started](https://www.docker.com/get-started)
 
+
+
+[Docker-Cheat-Sheet.pdf](https://github.com/Sagar-Chowdhury/Docker-Notes/files/15270069/Docker-Cheat-Sheet.pdf)
+
 **Docker CLI: Your Swiss Army Knife**
 
 | Command                | Description                                          |

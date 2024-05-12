@@ -3,6 +3,63 @@
 
 **Docker 🐳 – Solving Development Environment Headaches**
 
+### **History And Context - (`How Docker/Containers came to the Scene`)**
+
+Reference Material :- [Docker-Course](https://courses.devopsdirective.com/docker-beginner-to-pro/lessons/01-history-and-motivation/03-history-of-virtualization)
+
+(`Bare Metal`)
+![image](https://github.com/Sagar-Chowdhury/Docker-Notes/assets/76145064/a08c9a85-76e0-4a30-9ceb-f19ae12ff265)
+
+With a bare metal system, the operating system, binaries/libraries, and applications are installed and run directly onto the physical hardware.
+
+This is simple to understand and direct access to the hardware can be useful for specific configuration, but can lead to:
+
+1. Hellish *dependency conflicts*
+2. Low utilization efficiency
+3. Large blast radius
+4. Slow start up & shut down speed (minutes)
+5. Very slow provisioning & decommissioning (hours to days)
+
+(`Virtual Machines`)
+
+Virtual machines use a **system called a "hypervisor"** that can carve up the host resources into multiple isolated virtual hardware configuration which you can then treat as their own systems (each with an OS, binaries/libraries, and applications).
+
+***
+
+*Note on HyperVisor* [[Hypervisor](https://www.redhat.com/en/topics/virtualization/what-is-a-hypervisor)]
+
+A hypervisor is software that creates and runs virtual machines (VMs). A hypervisor, sometimes called a virtual machine monitor (VMM), isolates the hypervisor operating system and resources from the virtual machines and enables the creation and management of those VMs.
+
+The physical hardware, when used as a hypervisor, is called the host, while the many VMs that use its resources are guests.
+
+The hypervisor treats resources—like CPU, memory, and storage—as a pool that can be easily reallocated between existing guests or to new virtual machines.
+
+All hypervisors need some operating system-level components—such as a memory manager, process scheduler, input/output (I/O) stack, device drivers, security manager, a network stack, and more—to run VMs.
+
+The hypervisor gives each virtual machine the resources that have been allocated and manages the scheduling of VM resources against the physical resources. The physical hardware still does the execution, so CPU is still executing CPU instructions as requested by the VMs, for example, while the hypervisor manages the schedule.
+
+***
+
+![image](https://github.com/Sagar-Chowdhury/Docker-Notes/assets/76145064/d4875521-462f-460b-8f22-b646cf923d94)
+
+*Advantages over Bare Metal are*
+
+1. No dependency conflicts
+2. Better utilization efficiency
+3. Small blast radius
+4. Faster startup and shutdown (minutes)
+5. Faster provisioning & decommissioning (minutes)
+
+(`Containers`)
+
+Containers are similar to virtual machines in that they provide an isolated environment for installing and configuring binaries/libraries, but rather than virtualizing at the hardware layer containers use native linux features (cgroups + namespaces) to provide that isolation while still sharing the same kernel.
+
+![image](https://github.com/Sagar-Chowdhury/Docker-Notes/assets/76145064/502c2a88-c5c1-4d71-be0d-f4af73ff361e)
+
+![image](https://github.com/Sagar-Chowdhury/Docker-Notes/assets/76145064/845e6ef9-6cf8-419d-a932-1f01629d4639)
+
+***
+
 **Problem Statement**
 
 * Replicating development environments across machines can be a pain, especially when dealing with different configurations and dependencies.

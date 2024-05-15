@@ -462,6 +462,21 @@ docker run -it -v D:\SampleDockerFolder:/home/sharedFolder busybox
 * Mounts create a link between a storage resource and a location within the file system. The data itself isn't usually copied to the mount point.
 * Mounts can have different permissions (read-only, read-write) to control access.
 
+Here's a tabular comparison chart of **Docker Volumes and Bind Mounts**:
+
+| Feature/Aspect          | Volumes                             | Bind Mounts                        |
+|-------------------------|-------------------------------------|------------------------------------|
+| **Management**          | Managed by Docker                   | Managed by the host                |
+| **Storage Location**    | Docker's area (`/var/lib/docker/volumes` on Linux) | Any location on the host filesystem |
+| **Performance**         | Typically better performance for Docker use cases | Performance can vary depending on host filesystem and use case |
+| **Portability**         | High (portable across environments) | Low (dependent on host-specific paths) |
+| **Use Case**            | Persistent data, backups, sharing data between containers | Real-time access to host files, development scenarios |
+| **Setup Complexity**    | Simple (Docker handles paths and storage) | Can be complex (requires managing host paths) |
+| **Backup and Restore**  | Docker provides tooling for backup and restore | No built-in Docker support; relies on host's backup mechanisms |
+| **Isolation**           | More isolated from host system      | Direct access to host files        |
+| **Data Sharing**        | Easily shareable between containers | Less suitable for sharing due to path dependencies |
+| **Docker Syntax**       | `-v volume-name:/path/in/container` | `-v /path/on/host:/path/in/container` |
+| **Example Command**     | `docker run -d --name my-container -v my-volume:/data busybox` | `docker run -d --name my-container -v /path/on/host:/data busybox` |
 
 
 

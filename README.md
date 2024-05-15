@@ -466,6 +466,10 @@ docker run -it -v D:\SampleDockerFolder:/home/sharedFolder busybox
 * Mounts create a link between a storage resource and a location within the file system. The data itself isn't usually copied to the mount point.
 * Mounts can have different permissions (read-only, read-write) to control access.
 
+
+![image](https://github.com/Sagar-Chowdhury/Docker-Notes/assets/76145064/5f6f1b6c-d70f-4513-82c8-65a84b7acd5b)
+
+
 Here's a tabular comparison chart of **Docker Volumes and Bind Mounts**:
 
 | Feature/Aspect          | Volumes                             | Bind Mounts                        |

@@ -443,6 +443,10 @@ docker run -it -v D:\SampleDockerFolder:/home/sharedFolder busybox
 * For a detailed, comprehensive list of options, refer to the official Docker documentation: [https://docs.docker.com/storage/volumes/](https://docs.docker.com/storage/volumes/)
 * **Remember:** Volumes should be used for data that needs to persist beyond the life of individual containers.
 
+(`Example`)
+![image](https://github.com/Sagar-Chowdhury/Docker-Notes/assets/76145064/a1fd66fc-df87-4fd4-8b0c-1077110fc445)
+
+
 **Docker Mounts**
 
 **What are Mounts?**
